@@ -15,6 +15,7 @@ module.exports.createCustomer = async (event) => {
     Item: {
       primary_key: body.name,
       email: body.email,
+      age: body.age,
     },
   };
   await dynamoDb.put(putParams).promise();
@@ -22,5 +23,6 @@ module.exports.createCustomer = async (event) => {
   return {
     statusCode: 201,
     status: "success",
+    body: JSON.stringify(putParams.Item),
   };
 };
