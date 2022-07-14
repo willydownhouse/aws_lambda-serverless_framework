@@ -1,11 +1,12 @@
+app: sls1-service
 org: willydownhouse
-app: sls1
-service: sls1
+service: sls1-service
 frameworkVersion: "3"
 
 provider:
   name: aws
   runtime: nodejs14.x
+  stage: dev
 
   environment:
     DYNAMODB_CUSTOMER_TABLE: ${self:service}-customerTable-${sls:stage}
