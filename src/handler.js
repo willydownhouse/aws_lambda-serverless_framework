@@ -1,11 +1,11 @@
 "use strict";
 
-module.exports.hello = async (event) => {
+module.exports.health = async (event) => {
   return {
     statusCode: 200,
     body: JSON.stringify(
       {
-        message: `success, stage :`,
+        message: `healthcheck OK, on stage ${process.env.STAGE}`,
         input: event,
       },
       null,

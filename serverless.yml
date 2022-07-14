@@ -10,6 +10,7 @@ provider:
 
   environment:
     DYNAMODB_CUSTOMER_TABLE: ${self:service}-customerTable-${sls:stage}
+    STAGE: ${sls:stage}
 
   iam:
     role:
@@ -24,6 +25,13 @@ provider:
           Resource: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-customerTable-${sls:stage}
 
 functions:
+  health:
+    handler: src/handler.health
+    events:
+      - httpApi:
+          path: /health
+          method: get
+
   createCustomer:
     handler: src/createCustomer.createCustomer
     events:
