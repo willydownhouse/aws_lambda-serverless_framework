@@ -7,3 +7,19 @@
     status: 200
     body:
       message: "healthcheck OK, on stage dev"
+
+- name: GET /customers returns 200 and 2 items
+  endpoint:
+    function: getCustomers
+    method: get
+    path: /customers
+  response:
+    status: 200
+    body:
+      status: "success"
+      docs: 2
+      data:
+        [
+          { "email": "test@i", "primary_key": "willy3" },
+          { "email": "test@i", "primary_key": "willy1" },
+        ]

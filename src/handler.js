@@ -1,6 +1,7 @@
 "use strict";
 
 module.exports.health = async (event) => {
+  console.log("healthy");
   return {
     statusCode: 200,
     body: JSON.stringify(

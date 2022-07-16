@@ -36,8 +36,15 @@ functions:
     handler: src/createCustomer.createCustomer
     events:
       - httpApi:
-          path: /
+          path: /customers
           method: post
+
+  getCustomers:
+    handler: src/getCustomers.getCustomers
+    events:
+      - httpApi:
+          path: /customers
+          method: get
 
 resources:
   Resources:
