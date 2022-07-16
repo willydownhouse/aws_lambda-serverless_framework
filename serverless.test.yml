@@ -1,0 +1,9 @@
+- name: health endpoint returns 200
+  endpoint:
+    function: health
+    method: get
+    path: /health
+  response:
+    status: 200
+    body:
+      message: "healthcheck OK, on stage dev"
