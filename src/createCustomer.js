@@ -12,11 +12,13 @@ module.exports.createCustomer = async (event) => {
       email: body.email,
     },
   };
-  await dynamoDb.put(putParams).promise();
+  const res = await dynamoDb.put(putParams).promise();
 
   return {
     statusCode: 201,
-    status: "success",
-    body: JSON.stringify(putParams.Item),
+    body: JSON.stringify({
+      status: "success",
+      customer: putParams.Item,
+    }),
   };
 };

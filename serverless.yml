@@ -8,6 +8,10 @@ provider:
   runtime: nodejs14.x
   stage: dev
 
+  apiGateway:
+    apiKeys:
+      - my-secret-api-key
+
   environment:
     DYNAMODB_CUSTOMER_TABLE: ${self:service}-customerTable-${sls:stage}
     STAGE: ${sls:stage}
@@ -28,23 +32,26 @@ functions:
   health:
     handler: src/handler.health
     events:
-      - httpApi:
+      - http:
           path: /health
           method: get
+          private: true
 
   createCustomer:
     handler: src/createCustomer.createCustomer
     events:
-      - httpApi:
+      - http:
           path: /customers
           method: post
+          private: true
 
   getCustomers:
     handler: src/getCustomers.getCustomers
     events:
-      - httpApi:
+      - http:
           path: /customers
           method: get
+          private: true
 
 resources:
   Resources:
@@ -59,3 +66,4 @@ resources:
           - AttributeName: primary_key
             KeyType: HASH
         TableName: ${self:service}-customerTable-${sls:stage}
+#https://0876hx9qx8.execute-api.us-east-1.amazonaws.com/dev/customers

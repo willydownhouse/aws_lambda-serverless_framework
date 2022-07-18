@@ -13,9 +13,9 @@ module.exports.getCustomers = async (event) => {
     return {
       statusCode: 200,
 
-      body: {
+      body: JSON.stringify({
         message: "No items in this table",
-      },
+      }),
     };
   }
 
