@@ -8,11 +8,11 @@
     body:
       message: "healthcheck OK, on stage dev"
 
-- name: GET /customers returns 200 and 2 items
+- name: GET /bss returns 200 and 2 items
   endpoint:
-    function: getCustomers
+    function: getObs
     method: get
-    path: /customers
+    path: /obs
   response:
     status: 200
     body:

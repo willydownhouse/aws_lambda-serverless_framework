@@ -2,10 +2,10 @@
 
 const { dynamoDb } = require("../db");
 
-module.exports.getCustomers = async (event) => {
+module.exports.getObs = async (event) => {
   const res = await dynamoDb
     .scan({
-      TableName: process.env.DYNAMODB_CUSTOMER_TABLE,
+      TableName: process.env.DYNAMODB_OBS_TABLE,
     })
     .promise();
 

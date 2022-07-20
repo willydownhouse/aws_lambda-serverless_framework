@@ -13,7 +13,7 @@ provider:
       - my-secret-api-key
 
   environment:
-    DYNAMODB_CUSTOMER_TABLE: ${self:service}-customerTable-${sls:stage}
+    DYNAMODB_OBS_TABLE: ${self:service}-obsTable-${sls:stage}
     STAGE: ${sls:stage}
 
   iam:
@@ -26,44 +26,52 @@ provider:
             - "dynamodb:Scan*"
             - "dynamodb:UpdateItem"
             - "dynamodb:DeleteItem"
-          Resource: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-customerTable-${sls:stage}
+          Resource: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-obsTable-${sls:stage}
 
 functions:
+  test:
+    handler: src/testFunc.test
+    events:
+      - http:
+          path: /test
+          method: get
+          private: true
+
   health:
-    handler: src/handler.health
+    handler: src/health.health
     events:
       - http:
           path: /health
           method: get
           private: true
 
-  createCustomer:
-    handler: src/createCustomer.createCustomer
+  createOb:
+    handler: src/createOb.createOb
     events:
       - http:
-          path: /customers
+          path: /obs
           method: post
           private: true
 
-  getCustomers:
-    handler: src/getCustomers.getCustomers
+  getObs:
+    handler: src/getObs.getObs
     events:
       - http:
-          path: /customers
+          path: /obs
           method: get
           private: true
 
 resources:
   Resources:
-    CustomerTable:
+    ObsTable:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: primary_key
+          - AttributeName: id
             AttributeType: S
         BillingMode: PAY_PER_REQUEST
         KeySchema:
-          - AttributeName: primary_key
+          - AttributeName: id
             KeyType: HASH
-        TableName: ${self:service}-customerTable-${sls:stage}
+        TableName: ${self:service}-obsTable-${sls:stage}
 #https://0876hx9qx8.execute-api.us-east-1.amazonaws.com/dev/customers
