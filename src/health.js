@@ -13,6 +13,4 @@ module.exports.health = async (event) => {
   };
 };
 
-//https://jxf76zj6q5.execute-api.us-east-1.amazonaws.com/    DEV
-
-//https://madjv45xu9.execute-api.us-east-1.amazonaws.com/
+//https://kk6584by2b.execute-api.us-east-1.amazonaws.com/dev

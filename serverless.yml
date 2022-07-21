@@ -29,14 +29,6 @@ provider:
           Resource: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-obsTable-${sls:stage}
 
 functions:
-  test:
-    handler: src/testFunc.test
-    events:
-      - http:
-          path: /test
-          method: get
-          private: true
-
   health:
     handler: src/health.health
     events:
@@ -46,7 +38,7 @@ functions:
           private: true
 
   createOb:
-    handler: src/createOb.createOb
+    handler: src/obsCruds/createOb.createOb
     events:
       - http:
           path: /obs
@@ -54,12 +46,24 @@ functions:
           private: true
 
   getObs:
-    handler: src/getObs.getObs
+    handler: src/obsCruds/getObs.getObs
     events:
       - http:
           path: /obs
           method: get
           private: true
+
+  getOneOb:
+    handler: src/obsCruds/getOneOb.getOneOb
+    events:
+      - http:
+          path: /obs/{id}
+          method: get
+          private: true
+          # request:
+          #   parameters:
+          #     paths:
+          #       id: true
 
 resources:
   Resources:
@@ -74,4 +78,6 @@ resources:
           - AttributeName: id
             KeyType: HASH
         TableName: ${self:service}-obsTable-${sls:stage}
-#https://0876hx9qx8.execute-api.us-east-1.amazonaws.com/dev/customers
+
+plugins:
+  - serverless-offline

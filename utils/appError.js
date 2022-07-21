@@ -9,7 +9,6 @@ function buildErrorObject(err) {
   return {
     statusCode: err instanceof AppError ? err.statusCode : 500,
     body: JSON.stringify({
-      status: "error",
       message: err.message,
     }),
   };

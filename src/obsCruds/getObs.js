@@ -1,6 +1,6 @@
 "use strict";
 
-const { dynamoDb } = require("../db");
+const { dynamoDb } = require("../../db");
 
 module.exports.getObs = async (event) => {
   const res = await dynamoDb
@@ -22,7 +22,6 @@ module.exports.getObs = async (event) => {
   return {
     statusCode: 200,
     body: JSON.stringify({
-      status: "success",
       docs: res.Count,
       data: res.Items,
     }),
