@@ -1,12 +1,13 @@
 {
   "dependencies": {
     "aws-sdk": "^2.1174.0",
+    "busboy": "^1.6.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
     "serverless-offline": "^9.0.0"
   },
   "scripts": {
-    "start": "nodemon -exec sls offline"
+    "start": "nodemon --exec sls offline"
   }
 }

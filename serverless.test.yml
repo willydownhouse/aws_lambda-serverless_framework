@@ -3,12 +3,15 @@
     function: health
     method: get
     path: /health
+  request:
+    headers:
+      x-api-key: ${env:my-secret-api-key}
   response:
     status: 200
     body:
       message: "healthcheck OK, on stage dev"
 
-- name: GET /bss returns 200 and 2 items
+- name: GET /obs returns 200 and 1 items
   endpoint:
     function: getObs
     method: get
@@ -16,7 +19,6 @@
   response:
     status: 200
     body:
-      status: "success"
       docs: 2
       data:
         [

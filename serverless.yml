@@ -6,14 +6,17 @@ frameworkVersion: "3"
 provider:
   name: aws
   runtime: nodejs14.x
-  stage: dev
 
   apiGateway:
     apiKeys:
       - my-secret-api-key
 
+    binaryMediaTypes:
+      - "multipart/form-data"
+
   environment:
     DYNAMODB_OBS_TABLE: ${self:service}-obsTable-${sls:stage}
+    BUCKET: ${self:service}-obphotosbucket-${sls:stage}
     STAGE: ${sls:stage}
 
   iam:
@@ -29,6 +32,14 @@ provider:
           Resource: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-obsTable-${sls:stage}
 
 functions:
+  uploader:
+    handler: src/photoUpload.photoUpload
+    events:
+      - http:
+          path: /upload
+          method: post
+          private: true
+
   health:
     handler: src/health.health
     events:
@@ -79,5 +90,45 @@ resources:
             KeyType: HASH
         TableName: ${self:service}-obsTable-${sls:stage}
 
+    ObPhotosBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:service}-obphotosbucket-${sls:stage}
+        #AccessControl: PublicRead
+    UploadRole:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+              Action: sts:AssumeRole
+        Policies:
+          - PolicyName: upload-policy
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - s3:PutObject
+                    - s3:PutObjectAcl
+                  Resource: !Sub
+                    - "arn:aws:s3:::${BucketName}/*"
+                    - { BucketName: !Ref ObPhotosBucket }
+                - Effect: Allow
+                  Action:
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource:
+                    Fn::Sub:
+                      - arn:aws:logs:${Region}:${AccountId}:log-group:/aws/lambda/*:*:*
+                      - {
+                          Region: !Ref AWS::Region,
+                          AccountId: !Ref AWS::AccountId,
+                        }
 plugins:
   - serverless-offline
