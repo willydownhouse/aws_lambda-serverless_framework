@@ -21,7 +21,6 @@ function validateAndReturnNewOb(body) {
     zone,
     coords,
     description,
-    photos = [],
     altitude,
     aspect,
     temperature,
@@ -30,6 +29,7 @@ function validateAndReturnNewOb(body) {
     snow_cover,
     snow_tested = false,
     snow_tests = [],
+    photos = [],
   } = body;
 
   if (!valley || typeof valley !== "string") {
@@ -76,8 +76,16 @@ function validateAndReturnNewOb(body) {
     throw new AppError(400, "Not a valid avalance danger");
   } else if (!snow_cover || isNaN(+snow_cover)) {
     throw new AppError(400, "Not a valid snow_ cover");
+  } else if (!Array.isArray(photos)) {
+    throw new AppError(400, "Not valid photos");
+  } else if (
+    photos.length > 0 &&
+    !photos.every((url) => typeof url === "string")
+  ) {
+    throw new AppError(400, "Please check your photo urls");
+  } else if (snow_tested && typeof snow_tested !== "boolean") {
+    throw new AppError(400, "Not a valid snow_tested value");
   }
-
   return {
     id: uuidv4(),
     valley,

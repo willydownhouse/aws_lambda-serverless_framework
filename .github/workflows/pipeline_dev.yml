@@ -1,4 +1,4 @@
-name: Deploy master branch
+name: Deploy dev branch if not skipped
 
 on:
   push:
@@ -19,12 +19,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
+      - name: test
+        run: npm run test
       - name: serverless deploy
+        if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, 'skip')}}
         uses: serverless/github-action@v3.1
         with:
           args: deploy --stage dev
         env:
           SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
-          # or if using AWS credentials directly
-          #AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          #AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#

@@ -11,14 +11,12 @@ module.exports.photoUpload = async (event) => {
   try {
     const { body } = await extractFile(event);
 
-    await s3
-      .putObject({
-        Bucket: BUCKET,
-        Key: body.fileInfo.filename,
-        ACL: "public-read",
-        Body: body.file,
-      })
-      .promise();
+    s3.putObject({
+      Bucket: BUCKET,
+      Key: body.fileInfo.filename,
+      ACL: "public-read",
+      Body: body.file,
+    }).promise();
 
     return {
       statusCode: 200,
@@ -27,6 +25,6 @@ module.exports.photoUpload = async (event) => {
       }),
     };
   } catch (err) {
-    return buildErrorObject(err);
+    buildErrorObject(err);
   }
 };

@@ -1,11 +1,10 @@
 - name: health endpoint returns 200
-  endpoint:
-    function: health
-    method: get
-    path: /health
+  endpoint: { function: health }
+
   request:
     headers:
-      x-api-key: ${env:my-secret-api-key}
+      x-api-key: { provider: environment.API_KEY }
+      #x-api-key: ${file(./serverless.yml):provider.environment.API_KEY}
   response:
     status: 200
     body:
