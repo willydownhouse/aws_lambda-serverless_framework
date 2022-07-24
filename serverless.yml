@@ -94,7 +94,7 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:service}-obphotosbucket-${sls:stage}
-        #AccessControl: PublicRead
+        AccessControl: PublicRead
     UploadRole:
       Type: AWS::IAM::Role
       Properties:
