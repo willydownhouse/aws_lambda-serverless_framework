@@ -30,6 +30,7 @@ function validateAndReturnNewOb(body) {
     snow_tested = false,
     snow_tests = [],
     photos = [],
+    createdAt = new Date().toLocaleString(),
   } = body;
 
   if (!valley || typeof valley !== "string") {
@@ -69,7 +70,6 @@ function validateAndReturnNewOb(body) {
   } else if (
     !avalance_danger ||
     isNaN(+avalance_danger) ||
-    +avalance_danger === 0 ||
     +avalance_danger < 1 ||
     +avalance_danger > 5
   ) {
@@ -94,7 +94,8 @@ function validateAndReturnNewOb(body) {
       lat: coords.lat,
       long: coords.long,
     },
-    createdAt: new Date().toLocaleString(),
+    createdAt,
+    updatedAt: new Date().toLocaleString(),
     description,
     photos,
     altitude,

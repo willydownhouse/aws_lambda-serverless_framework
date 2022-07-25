@@ -6,6 +6,7 @@ frameworkVersion: "3"
 provider:
   name: aws
   runtime: nodejs14.x
+  #stage: ${opt:stage}
 
   apiGateway:
     apiKeys:
@@ -76,6 +77,22 @@ functions:
           #   parameters:
           #     paths:
           #       id: true
+
+  updateOb:
+    handler: src/obsCruds/updateOb.updateOb
+    events:
+      - http:
+          path: /obs/{id}
+          method: put
+          private: true
+
+  deleteOb:
+    handler: src/obsCruds/deleteOb.deleteOb
+    events:
+      - http:
+          path: /obs/{id}
+          method: delete
+          private: true
 
 resources:
   Resources:

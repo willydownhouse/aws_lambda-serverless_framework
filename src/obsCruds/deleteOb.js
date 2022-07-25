@@ -5,20 +5,21 @@ const {
 const { buildErrorObject, AppError } = require("../../utils/appError");
 const { dynamoDb } = require("../../db");
 
-module.exports.getOneOb = async (event) => {
+module.exports.deleteOb = async (event) => {
   try {
     const { id } = event.pathParameters;
 
-    const item = await checkIfItemExistsInDynamoDbTableOrThrowAnError(
-      dynamoDb,
-      id
-    );
+    await checkIfItemExistsInDynamoDbTableOrThrowAnError(dynamoDb, id);
+
+    await dynamoDb
+      .delete({
+        TableName: process.env.DYNAMODB_OBS_TABLE,
+        Key: { id },
+      })
+      .promise();
 
     return {
-      statusCode: 200,
-      body: JSON.stringify({
-        data: item,
-      }),
+      statusCode: 204,
     };
   } catch (err) {
     return buildErrorObject(err);
