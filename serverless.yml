@@ -21,11 +21,13 @@ provider:
     STAGE: ${sls:stage}
     API_KEY: ${param:my-secret-api-key}
 
+  # permissions for functions
   iam:
     role:
       statements:
         - Effect: "Allow"
           Action:
+            - "dynamodb:Query"
             - "dynamodb:PutItem"
             - "dynamodb:Get*"
             - "dynamodb:Scan*"

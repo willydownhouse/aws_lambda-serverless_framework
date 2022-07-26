@@ -1,4 +1,4 @@
-const { AppError, buildErrorObject } = require("../utils/appError");
+const { AppError, buildErrorObject } = require("../src/utils/appError");
 
 const appError = new AppError(300, "i am app error");
 

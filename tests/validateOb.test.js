@@ -1,5 +1,5 @@
-const { validateAndReturnNewOb } = require("../utils/validateOb");
-const { AppError } = require("../utils/appError");
+const { validateAndReturnNewOb } = require("../src/utils/validateOb");
+//const { AppError } = require("../src/utils/appError");
 
 describe("validateOb function errors", () => {
   test("if no valley throws an error", () => {

@@ -1,9 +1,9 @@
 "use strict";
 
-const { dynamoDb } = require("../../db");
+const { dynamoDb } = require("../db");
 
-const { buildErrorObject } = require("../../utils/appError");
-const { validateAndReturnNewOb } = require("../../utils/validateOb");
+const { buildErrorObject } = require("../utils/appError");
+const { validateAndReturnNewOb } = require("../utils/validateOb");
 
 module.exports.createOb = async (event) => {
   try {

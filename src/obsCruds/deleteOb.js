@@ -1,9 +1,9 @@
 "use strict";
 const {
   checkIfItemExistsInDynamoDbTableOrThrowAnError,
-} = require("../../utils/checkIfItemInDb");
-const { buildErrorObject, AppError } = require("../../utils/appError");
-const { dynamoDb } = require("../../db");
+} = require("../utils/checkIfItemInDb");
+const { buildErrorObject } = require("../utils/appError");
+const { dynamoDb } = require("../db");
 
 module.exports.deleteOb = async (event) => {
   try {

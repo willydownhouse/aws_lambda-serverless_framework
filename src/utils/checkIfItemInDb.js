@@ -1,4 +1,4 @@
-const { AppError } = require("../utils/appError");
+const { AppError } = require("./appError");
 
 async function checkIfItemExistsInDynamoDbTableOrThrowAnError(db, id) {
   const res = await db
