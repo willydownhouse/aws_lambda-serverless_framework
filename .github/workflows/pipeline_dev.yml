@@ -20,13 +20,13 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: install packages
         run: npm ci
-      - name: install serverless
-        run: npm install -g serverless
-      - name: run serverless offline
-        run: serverless offline
-        env:
-          OFFLINE_API_KEY: ${{secrets.OFFLINE_API_KEY}}
-          OFFLINE_URL: http://localhost:3000/dev
+      # - name: install serverless
+      #   run: npm install -g serverless
+      # - name: run serverless offline
+      #   run: serverless offline
+      #   env:
+      #     OFFLINE_API_KEY: ${{secrets.OFFLINE_API_KEY}}
+      #     OFFLINE_URL: http://localhost:3000/dev
       - name: test
         run: npm run test
       - name: Echo github object
