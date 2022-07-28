@@ -19,9 +19,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: install packages
-      - run: npm ci
+        run: npm ci
       - name: run serverless offline
-      - run: sls offline
+        run: sls offline
         env:
           OFFLINE_API_KEY: ${{}}
           OFFLINE_URL: http://localhost:3000/dev
