@@ -24,7 +24,7 @@ describe("API tests", () => {
   test("GET /health returns 200", async () => {
     const res = await offlineApi.get("/health");
 
-    console.log("jokohan nyt");
+    console.log("jahhas 1.4");
 
     expect(res.data.message).toBe("healthcheck OK, on stage dev");
   });
