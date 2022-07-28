@@ -8,6 +8,14 @@ const devApi = axios.create({
   },
 });
 
+const offlineApi = axios.create({
+  baseURL: config.OFFLINE_URL,
+  headers: {
+    "x-api-key": config.OFFLINE_API_KEY,
+  },
+});
+
 module.exports = {
   devApi,
+  offlineApi,
 };

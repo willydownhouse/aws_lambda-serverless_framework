@@ -1,4 +1,4 @@
-const { devApi } = require("../src/api");
+const { devApi, offlineApi } = require("../src/api");
 const fs = require("fs");
 const FormData = require("form-data");
 
@@ -21,11 +21,13 @@ const sampleOb = {
 };
 
 describe("API tests", () => {
-  // test("GET /health returns 200", async () => {
-  //   const res = await devApi.get("/health");
+  test("GET /health returns 200", async () => {
+    const res = await offlineApi.get("/health");
 
-  //   expect(res.data.message).toBe("healthcheck OK, on stage dev");
-  // });
+    console.log("haloo lyngen!");
+
+    expect(res.data.message).toBe("healthcheck OK, on stage dev");
+  });
   // test("POST /obs returns 201", async () => {
   //   const res = await devApi.post("/obs", sampleOb);
 
@@ -35,15 +37,15 @@ describe("API tests", () => {
   //   expect(res.status).toBe(201);
   //   expect(res.data.data).toBeDefined();
   // });
-  test("GET /obs/{id} returns 200", async () => {
-    const res = await devApi.get("/obs/b0d5d919-ec03-4f53-b6e1-3ee6410fb88c");
+  // test("GET /obs/{id} returns 200", async () => {
+  //   const res = await devApi.get("/obs/e554bada-398e-44c8-a73a-b05ef6a93c9f");
 
-    console.log("resData");
-    console.log(res.data);
+  //   console.log("resData");
+  //   console.log(res.data);
 
-    expect(res.status).toBe(200);
-    expect(res.data.data).toBeDefined();
-  });
+  //   expect(res.status).toBe(200);
+  //   expect(res.data.data).toBeDefined();
+  // });
 
   //   test("POST /upload returns 200", async () => {
   //     try {
