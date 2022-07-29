@@ -21,13 +21,12 @@ provider:
     STAGE: ${sls:stage}
     API_KEY: ${param:my-secret-api-key}
 
-  # permissions for functions
+  # this creates to IAM sls1-service-dev-us-east-1-lambdaRole
   iam:
     role:
       statements:
         - Effect: "Allow"
           Action:
-            - "dynamodb:Query"
             - "dynamodb:PutItem"
             - "dynamodb:Get*"
             - "dynamodb:Scan*"
@@ -115,6 +114,7 @@ resources:
       Properties:
         BucketName: ${self:service}-obphotosbucket-${sls:stage}
         AccessControl: PublicRead
+
     UploadRole:
       Type: AWS::IAM::Role
       Properties:

@@ -13,13 +13,15 @@ jobs:
       matrix:
         node-version: [16.x]
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: install packages
-        run: npm ci
+      - name: print hello world
+        run: echo "hello world"
+      # - uses: actions/checkout@v3
+      # - name: Use Node.js ${{ matrix.node-version }}
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: ${{ matrix.node-version }}
+      # - name: install packages
+      #   run: npm ci
       # - name: install serverless
       #   run: npm install -g serverless
       # - name: run serverless offline
@@ -27,15 +29,15 @@ jobs:
       #   env:
       #     OFFLINE_API_KEY: ${{secrets.OFFLINE_API_KEY}}
       #     OFFLINE_URL: http://localhost:3000/dev
-      - name: test
-        run: npm run test
-      - name: Echo github object
-        run: echo "${{toJson(github.event)}}"
-      - name: serverless deploy
-        if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, 'skip')}}
-        uses: serverless/github-action@v3.1
-        with:
-          args: deploy --stage dev
-        env:
-          SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+      # - name: test
+      #   run: npm run test
+      # - name: Echo github object
+      #   run: echo "${{toJson(github.event)}}"
+      # - name: serverless deploy
+      #   if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, 'skip')}}
+      #   uses: serverless/github-action@v3.1
+      #   with:
+      #     args: deploy --stage dev
+      #   env:
+      #     SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
 #

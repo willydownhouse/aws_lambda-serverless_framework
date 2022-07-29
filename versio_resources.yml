@@ -20,29 +20,9 @@ provider:
     STAGE: ${sls:stage}
     API_KEY: ${param:my-secret-api-key}
 
-  # these are permissions for all functions
-  # plugin serverless-iam-roles-per-function
+  # role defined in resources
   iam:
-    role:
-      name: ${self:service}-myAppRole-${sls:stage}
-      statements:
-        - Effect: "Allow"
-          Action:
-            - "dynamodb:Query"
-            - "dynamodb:PutItem"
-            - "dynamodb:Get*"
-            - "dynamodb:Scan*"
-            - "dynamodb:UpdateItem"
-            - "dynamodb:DeleteItem"
-          Resource: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-obsTable-${sls:stage}
-
-        - Effect: Allow
-          Action:
-            - s3:PutObject
-            - s3:PutObjectAcl
-            - s3:GetObject
-            - s3:DeleteObject
-          Resource: arn:aws:s3:::${self:service}-obphotosbucket-${sls:stage}/*"
+    role: MyAostaAppRole
 
 functions:
   uploader:
@@ -120,6 +100,44 @@ resources:
       Properties:
         BucketName: ${self:service}-obphotosbucket-${sls:stage}
         #AccessControl: PublicRead
+
+    MyAostaAppRole:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+              Action: sts:AssumeRole
+        Policies:
+          - PolicyName: my-aostaApp-policy
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: "Allow"
+                  Action:
+                    - "dynamodb:Query"
+                    - "dynamodb:PutItem"
+                    - "dynamodb:Get*"
+                    - "dynamodb:Scan*"
+                    - "dynamodb:UpdateItem"
+                    - "dynamodb:DeleteItem"
+                  Resource: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-obsTable-${sls:stage}
+                - Effect: Allow
+                  Action:
+                    - s3:GetObject
+                    - s3:PutObject
+                    - s3:PutObjectAcl
+                  Resource: arn:aws:s3:::${self:service}-obphotosbucket-${sls:stage}/*
+                - Effect: Allow
+                  Action:
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource: arn:aws:logs:${aws:region}:${aws:accountId}:log-group:/aws/lambda/*:*:*
 
 plugins:
   - serverless-offline
