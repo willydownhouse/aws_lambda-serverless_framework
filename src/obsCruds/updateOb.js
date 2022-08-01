@@ -59,9 +59,7 @@ module.exports.updateOb = async (event) => {
 
     return {
       statusCode: 200,
-      body: JSON.stringify({
-        data: res.Attributes,
-      }),
+      body: JSON.stringify(res.Attributes),
     };
   } catch (err) {
     return buildErrorObject(err);

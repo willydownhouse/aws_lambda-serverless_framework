@@ -20,9 +20,7 @@ module.exports.createOb = async (event) => {
 
     return {
       statusCode: 201,
-      body: JSON.stringify({
-        data: newOb,
-      }),
+      body: JSON.stringify(newOb),
     };
   } catch (err) {
     return buildErrorObject(err);

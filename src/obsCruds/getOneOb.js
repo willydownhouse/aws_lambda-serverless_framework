@@ -16,9 +16,7 @@ module.exports.getOneOb = async (event) => {
 
     return {
       statusCode: 200,
-      body: JSON.stringify({
-        data: item,
-      }),
+      body: JSON.stringify(item),
     };
   } catch (err) {
     return buildErrorObject(err);

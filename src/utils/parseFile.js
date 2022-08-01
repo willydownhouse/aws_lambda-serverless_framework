@@ -24,10 +24,14 @@ const extractFile = (event) =>
 
     bb.on("file", (fieldname, file, fileData, encoding, mimetype) => {
       file.on("data", (data) => {
+        console.log("busboy data");
+        console.log(data);
         result.file = data;
       });
 
       file.on("end", () => {
+        console.log("busboy fileData");
+        console.log(fileData);
         result.fileInfo = fileData;
       });
     });

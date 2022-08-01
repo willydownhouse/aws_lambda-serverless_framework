@@ -6,10 +6,13 @@ class AppError extends Error {
 }
 
 function buildErrorObject(err) {
+  console.log("build error object:");
+  console.log(err);
+
   return {
-    statusCode: err instanceof AppError ? err.statusCode : 500,
+    statusCode: err.statusCode || 500,
     body: JSON.stringify({
-      message: err.message,
+      message: err.code || err.message,
     }),
   };
 }

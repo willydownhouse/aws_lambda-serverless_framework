@@ -26,7 +26,7 @@ provider:
     role:
       name: ${self:service}-myAppRole-${sls:stage}
       statements:
-        - Effect: "Allow"
+        - Effect: Allow
           Action:
             - "dynamodb:Query"
             - "dynamodb:PutItem"
@@ -38,11 +38,12 @@ provider:
 
         - Effect: Allow
           Action:
-            - s3:PutObject
-            - s3:PutObjectAcl
-            - s3:GetObject
-            - s3:DeleteObject
-          Resource: arn:aws:s3:::${self:service}-obphotosbucket-${sls:stage}/*"
+            - "s3:PutObject"
+            - "s3:PutObjectAcl"
+            - "s3:GetObject"
+            - "s3:GetObjectAcl"
+            - "s3:DeleteObject"
+          Resource: arn:aws:s3:::${self:service}-obphotosbucket-${sls:stage}/*
 
 functions:
   uploader:
